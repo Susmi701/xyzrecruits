@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyText
+  active: false
+  category: one
+  experience_required: 1
+  location: MyString
+  job_type: 1
+  closing_date: 2024-08-05 10:18:25
+
+two:
+  title: MyString
+  description: MyText
+  active: false
+  category: two
+  experience_required: 1
+  location: MyString
+  job_type: 1
+  closing_date: 2024-08-05 10:18:25

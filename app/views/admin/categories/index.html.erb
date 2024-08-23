@@ -1,0 +1,38 @@
+<h2 class="text-center m-4 pt-4"> Category Directory</h2>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-11">
+            <%= render 'form'%>
+            <table class="table table-striped table-hover table-bordered ">
+                <thead >
+                    <tr>
+                        <th>Name</th>
+                        <th>created_at</th>
+                        <th>Actions</th>
+                    </tr>    
+                </thead>
+                <tbody>
+                    <% @categories.each do |category| %>
+                        <tr>
+                            <td><%= category.name %></td>
+                            <td><%= category.created_at.strftime('%Y-%m-%d')  %></td>
+                            <td>
+                                <% if (current_user) %>
+                                <%= link_to edit_admin_category_path(category) do %>
+                                    <img src="https://www.freeiconspng.com/uploads/edit-editor-pen-pencil-write-icon--4.png" alt="Edit" style="height: 22px; width: 20px;">
+                                <% end %>
+                                <%# <%= link_to admin_category_path(category), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+                                <%# <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="Delete" style="height: 22px; width: 22px;">
+                                <% end %> 
+                                <%end%>
+                            </td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>                   
+</div>
+<div class="flickr_pagination my-4">
+    <%= will_paginate @categories, :container => false %>
+</div>

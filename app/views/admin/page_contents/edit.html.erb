@@ -1,0 +1,65 @@
+<%= form_with(model: [:admin, @page_content], url: admin_page_contents_path(@page_content), method: :patch, local: true, multipart: true) do |form| %>
+  <div class="form-group">
+    <%= form.label :home_header, class: 'form-label' %>
+    <%= form.text_field :home_header, class: 'form-control' %>
+    <%= render 'common/error_messages', errors: @page_content.errors[:home_header] %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :mission, class: 'form-label' %>
+    <%= form.text_field :mission, class: 'form-control' %>
+    <%= render 'common/error_messages', errors: @page_content.errors[:mission] %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :vision, class: 'form-label' %>
+    <%= form.text_field :vision, class: 'form-control' %>
+    <%= render 'common/error_messages', errors: @page_content.errors[:vision] %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :about_header, class: 'form-label' %>
+    <%= form.text_field :about_header, class: 'form-control' %>
+    <%= render 'common/error_messages', errors: @page_content.errors[:about_header] %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :about_us, class: 'form-label' %>
+    <%= form.text_area :about_us, class: 'form-control', rows: 3 %>
+    <%= render 'common/error_messages', errors: @page_content.errors[:about_us] %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :history, class: 'form-label' %>
+    <%= form.text_area :history, class: 'form-control', rows: 3 %>
+    <%= render 'common/error_messages', errors: @page_content.errors[:history] %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :ceo, class: 'form-label' %>
+    <%= form.text_field :ceo, class: 'form-control' %>
+    <%= render 'common/error_messages', errors: @page_content.errors[:ceo] %>
+  </div>
+  <div class="form-group">
+    <%= form.label :contact_header, class: 'form-label' %>
+    <%= form.text_field :contact_header, class: 'form-control' %>
+    <%= render 'common/error_messages', errors: @page_content.errors[:contact_header] %>
+  </div>
+
+
+  <div class="form-group">
+    <%= form.label :home_img, "Home Image", class: 'form-label' %>
+    <%= form.file_field :home_img, class: 'form-control-file' %>
+    <%= render 'common/error_messages', errors: @page_content.errors[:home_img] %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :ceo_img, "CEO Image", class: 'form-label' %>
+    <%= form.file_field :ceo_img, class: 'form-control-file' %>
+    <%= render 'common/error_messages', errors: @page_content.errors[:ceo_img] %>
+  </div>
+
+  <div class="form-group">
+    <%= form.submit 'Save Changes', class: 'btn btn-primary' %>
+  </div>
+<% end %>

@@ -1,0 +1,29 @@
+<%= form_with(model: [:admin, @contact], url: admin_contacts_path, method: :put, local: true) do |form| %> 
+  <div class="form-group">
+    <%= form.label :address, class: 'form-label' %>
+    <%= form.text_field :address, class: 'form-control' %>
+    <%= render 'common/error_messages', errors: @contact.errors[:address] %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :phone, class: 'form-label' %>
+    <%= form.text_field :phone, class: 'form-control' %>
+    <%= render 'common/error_messages', errors: @contact.errors[:phone] %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :email, class: 'form-label' %>
+    <%= form.text_field :email, class: 'form-control' %>
+    <%= render 'common/error_messages', errors: @contact.errors[:email] %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :website, class: 'form-label' %>
+    <%= form.text_field :website, class: 'form-control' %>
+    <%= render 'common/error_messages', errors: @contact.errors[:website] %>
+  </div>
+
+  <div class="form-group">
+    <%= form.submit 'Save Changes', class: 'btn btn-primary' %>
+  </div>
+<% end %>

@@ -1,0 +1,48 @@
+ <div class="d-flex">
+    <div class="main-content col">
+        <div class="d-flex justify-content-between mt-4">
+            <div class="card card-dashboard bg col-3">
+                <h4 class="display-2 txt fw-bold"><%= @active_jobs + @inactive_jobs %></h4>
+                <p>Active - <%= @active_jobs %><br>Inactive - <%= @inactive_jobs %><br> Total Jobs</p>
+            </div>
+            <div class="card card-dashboard bg col-3">
+            <h4 class="display-2 fw-bold txt"><%= @under_review_applications + @shortlisted_applications + @rejected_applications %></h4>
+                    <p>UnderReview - <%= @under_review_applications %><br>Shortlisted - <%= @shortlisted_applications %><br>Total Applications</p>
+            </div>
+            <div class="card card-dashboard bg col-3">
+                <h4 class="display-2 txt fw-bold"><%= @inquiries %></h4>
+                <p>Total Inquiries</p>
+            </div>
+        </div>
+        <div class="section-title d-flex justify-content-between align-items-center">
+            <span>Closing jobs</span>
+            <a href="<%= admin_jobs_path %>" class="arrow-link pb-2">
+                <i class="bi bi-arrow-right custom-button"></i>
+            </a>
+        </div>
+        <div class="d-flex ">
+            <% @latest_closing_jobs.each do |job| %>
+                <div class="job-card me-3 col-4">
+                <h5><%= job.title %></h5>
+                <p><%= job.location %></p>
+                <p><%= truncate(job.description, length: 250) %></p>
+                <a href="<%= admin_job_path(job) %>" class="text-white">View Job</a>
+                </div>
+            <% end %>
+        </div>
+        <div class="section-title d-flex justify-content-between align-items-center">
+            <span>Latest Inquiries</span>
+            <a href="<%= admin_inquiries_path %>" class="arrow-link pb-2">
+                <i class="bi bi-arrow-right custom-button"></i>
+            </a>
+        </div>
+        <div class="d-flex">
+            <% @latest_inquiries.each do |inquiry| %>
+                <div class="inquiry-card me-3 col-4">
+                    <h5><%= inquiry.name %></h5>
+                    <p> <%= truncate(inquiry.message, length: 150) %></p>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>

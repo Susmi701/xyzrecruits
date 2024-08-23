@@ -1,0 +1,20 @@
+<section class="hero-section py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="display-4 fw-bold"><%=@pagecontent.about_header %></h1>
+                    <p class=""><%= simple_format(@pagecontent.about_us) %></p>
+                </div>
+                <div class="col-md-4 text-end">
+<%= image_tag @pagecontent.ceo_img, alt: "CEO Image", class: "img-fluid rounded text-center", style: "max-width: 100%; height: auto;" %>
+                    <p class=" mt-2"><%= @pagecontent.ceo %><br>CEO of RECUT</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">OUR HISTORY</h2>
+<p><%= simple_format(@pagecontent.history) %></p>        </div>
+    </section>

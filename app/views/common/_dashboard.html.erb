@@ -1,0 +1,45 @@
+<div class="d-flex flex-column flex-shrink-0 p-3 " style="width: 280px;">
+  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+    <span class="fs-4">XYZ IT Solutions</span>
+  </a>
+  <hr>
+  <ul class="nav nav-pills flex-column mb-auto">
+    <li class="nav-item">
+      <%= link_to 'Home', admin_root_path, class: "nav-link text-white #{'active' if current_page?(admin_root_path)}" %>
+
+    </li>
+    <%if user_signed_in? && current_user.admin? %>
+    <li class="nav-item">
+      <%= link_to 'Users', admin_users_path, class: "nav-link text-white #{'active' if current_page?(admin_users_path)}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'Add User', new_admin_user_path, class: "nav-link text-white #{'active' if current_page?(new_admin_user_path)}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'Manange Contact',edit_admin_contacts_path , class: "nav-link text-white #{'active' if current_page?(edit_admin_contacts_path )}" %>
+    </li>
+     <li class="nav-item">
+      <%= link_to 'Manange Content',edit_admin_page_contents_path , class: "nav-link text-white #{'active' if current_page?(edit_admin_page_contents_path )}" %>
+    </li>
+    <%end%>
+    <li class="nav-item">
+      <%= link_to 'Jobs', admin_jobs_path, class: "nav-link text-white #{'active' if current_page?(admin_jobs_path)}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'Add Job', new_admin_job_path, class: "nav-link text-white #{'active' if current_page?(new_admin_job_path)}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'Skills', admin_skills_path, class: "nav-link text-white #{'active' if current_page?(admin_skills_path)}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'Categories', admin_categories_path, class: "nav-link text-white #{'active' if current_page?(admin_categories_path)}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'Inquiries', admin_inquiries_path, class: "nav-link text-white #{'active' if current_page?(admin_inquiries_path)}" %>
+    </li>
+  </ul>
+</div>
+<div class="sidebar-footer mt-auto p-3 ">
+  <%= button_to 'Sign out', destroy_user_session_path, method: :delete, class: "btn btn-sm btn-danger" %>
+</div>
+ 

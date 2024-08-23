@@ -1,0 +1,42 @@
+<h2 class="text-center m-4 pt-4"> Registered Users Directory</h2>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-11">
+            <div class="d-flex justify-content-between align-items-center mb-4 ">
+                <h3 class="mb-0">Users</h3>
+                <%= link_to 'Add New User', new_admin_user_path, class: 'custom-button' %>
+            </div>
+            <table class="table table-striped table-hover table-bordered ">
+                <thead >
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>created_at</th>
+                        <th>Password_reset?</th>
+                        <th>Action</th>
+                    </tr>    
+                </thead>
+                <tbody>
+                    <% @users.each do |user| %>
+                        <tr>
+                            <td><%= user.name %></td>
+                            <td><%= user.email %></td>
+                            <td><%= user.created_at.to_date %></td>
+                            <td><%= user.status%></td>
+                            <td>
+                                <% if (current_user == user || current_user.admin?) %>
+                                      <%= link_to admin_user_path(user), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+                                        <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="Delete" style="height: 22px; width: 22px;">
+                                    <% end %>
+                                <%end%>
+                            </td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>                   
+</div>
+<div class="flickr_pagination my-4">
+    <%= will_paginate @users, :container => false %>
+</div>

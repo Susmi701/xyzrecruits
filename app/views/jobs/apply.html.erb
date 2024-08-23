@@ -1,0 +1,77 @@
+  <div class="row d-flex justify-content-center align-items-center ">
+    <div class="col-xl-9">
+      <h1 class=" my-4">Apply for <%= @job.title %></h1>
+      <div class="card" style="border-radius: 15px;">
+        <div class="card-body">
+          <%= form_with(model: [@job, @application], local: true, url: submit_application_job_path(@job)) do |form| %>
+            <div class="row align-items-center pt-4 pb-3">
+              <div class="col-md-3 ps-5">
+                <h6 class="mb-0">Full name</h6>
+              </div>
+              <div class="col-md-9 pe-5">
+                <%= form.text_field :name, class: 'form-control form-control-lg' %>
+                <%= render 'common/error_messages', errors: @application.errors[:name] %>
+              </div>
+            </div>
+
+            <hr class="mx-n3">
+
+            <div class="row align-items-center py-3">
+              <div class="col-md-3 ps-5">
+                <h6 class="mb-0">Email address</h6>
+              </div>
+              <div class="col-md-9 pe-5">
+                <%= form.email_field :email, class: 'form-control form-control-lg', placeholder: 'example@example.com' %>
+                <%= render 'common/error_messages', errors: @application.errors[:email] %>
+              </div>
+            </div>
+
+            <hr class="mx-n3">
+
+            <div class="row align-items-center py-3">
+              <div class="col-md-3 ps-5">
+                <h6 class="mb-0">Experience (Years)</h6>
+              </div>
+              <div class="col-md-9 pe-5">
+                <%= form.select :experience, (0..30).to_a, { prompt: 'Please select' }, { class: 'form-control form-control-lg' } %>
+                <%= render 'common/error_messages', errors: @application.errors[:experience] %>
+              </div>
+            </div>
+
+            <hr class="mx-n3">
+
+            <div class="row align-items-center py-3">
+              <div class="col-md-3 ps-5">
+                <h6 class="mb-0">Skills</h6>
+              </div>
+              <div class="col-md-9 pe-5">
+                <%= form.collection_select :skill_ids, Skill.all, :id, :name, { prompt: 'Please select' }, { multiple: true, size: 10, class: 'form-control' } %>
+              <%= render 'common/error_messages', errors: @application.errors[:skill_ids] %>
+              </div>
+            </div>
+
+            <hr class="mx-n3">
+
+            <div class="row align-items-center py-3">
+              <div class="col-md-3 ps-5">
+                <h6 class="mb-0">Upload CV</h6>
+              </div>
+              <div class="col-md-9 pe-5">
+                <%= form.file_field :resume, class: 'form-control form-control-lg' %>
+               <%= render 'common/error_messages', errors: @application.errors[:resume] %>
+              </div>
+            </div>
+
+            <hr class="mx-n3">
+
+            <div class="px-5 py-4">
+              <%= form.submit 'Submit Application', class: 'btn btn-primary btn-lg' %>
+            </div>
+          <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+

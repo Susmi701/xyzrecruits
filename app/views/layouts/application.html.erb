@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Xyzrecruits</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+  </head>
+
+  <body>
+    <% if user_signed_in? %>
+      <div class="d-flex">
+        <div class="sidebar">
+          <%= render "common/dashboard" %>
+        </div>
+        <div class="content flex-grow-1 p-3">
+          <%= render 'layouts/messages' %>
+          <div class="page-content">   
+      <%= yield %>
+    </div>
+        </div>
+      </div>
+    <% else %>
+      <%= render "common/nav" %>
+      <%= render 'layouts/messages' %>
+      <div class="page-content">   
+      <%= yield %>
+    </div>
+      <%= render "common/footer" %>
+    <% end %>
+  </body>
+</html>

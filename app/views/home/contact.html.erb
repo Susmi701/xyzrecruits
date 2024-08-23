@@ -1,0 +1,65 @@
+
+<section class="bg-light py-3 pt-md-5">
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6">
+        <h3 class="fs-6 text-secondary mb-2 text-uppercase text-center"><%= @pagecontent.contact_header %></h3>
+        <hr class="w-50 mx-auto mb-5 mb-xl-9 border-dark-subtle">
+      </div>
+    </div>
+  </div>
+  </section>
+
+<section class="bg-light pb-4">
+  <div class="container">
+    <div class="row gy-3 gy-md-4 gy-lg-0 align-items-xl-center">
+      <div class="col-12 col-lg-6">
+      <p><strong>Address:</strong><%=@contact.address%></p>
+       <p><strong>Phone:</strong><%=@contact.phone%></p>
+        <p><strong>Email:</strong><%=@contact.email%></p>
+         <p><strong>Website:</strong><%=@contact.website%></p>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="row justify-content-xl-center">
+          <div class="col-12 col-xl-11">
+            <div class="bg-white border rounded shadow-sm overflow-hidden">
+
+              <%= form_with model: @inquiry, local: true do |f| %>
+                <div class="row gy-4 gy-xl-5 p-4 p-xl-5">
+                  <div class="col-12">
+                    <%= f.label :name, class: 'form-label' %> <span class="text-danger">*</span>
+                    <%= f.text_field :name, class: 'form-control', required: true %>
+                    <%= render 'common/error_messages', errors: @inquiry.errors[:name] %>
+                  </div>
+                  <div class="col-12">
+                    <%= f.label :email, class: 'form-label' %> <span class="text-danger">*</span>
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                          <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
+                        </svg>
+                      </span>
+                      <%= f.email_field :email, class: 'form-control', required: true %>
+                      <%= render 'common/error_messages', errors: @inquiry.errors[:email] %>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <%= f.label :message, class: 'form-label' %> <span class="text-danger">*</span>
+                    <%= f.text_area :message, rows: 3, class: 'form-control', required: true %>
+                    <%= render 'common/error_messages', errors: @inquiry.errors[:message] %>
+                  </div>
+                  <div class="col-12">
+                    <div class="d-grid">
+                      <%= f.submit 'Send Message', class: 'btn btn-primary btn-lg' %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

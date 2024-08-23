@@ -1,0 +1,55 @@
+<h2 class="text-center m-4 pt-4">Category Directory</h2>
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-11">
+      <table class="table table-striped table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Message</th>
+            <th>Sent At</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @inquiries.each do |inquiry| %>
+            <tr>
+              <td><%= inquiry.name %></td>
+              <td><%= inquiry.email %></td>
+              <td><%= truncate(inquiry.message, length: 50) %></td>
+              <td><%= inquiry.created_at.strftime('%Y-%m-%d') %></td>
+              <td>
+                <% if current_user %>
+                  <button type="button" class="btn btn-info view-message" data-bs-toggle="modal" data-bs-target="#messageModal" data-name="<%= inquiry.name %>" data-email="<%= inquiry.email %>" data-message="<%= inquiry.message %>">
+                    View Message
+                  </button>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="flickr_pagination my-4">
+  <%= will_paginate @inquiries, container: false %>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="messageModalLabel">Message</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="messageContent">
+        <!-- Message content will be inserted here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="container">
+<h2 class="text-center m-4 pt-4"> Job Directory</h2>
+<%= form_tag jobs_path, method: :get, local: true, class: "mb-4" do %>
+  <div class="row">
+    <div class="col-md-3">
+      <%= label_tag :skill_id, "Filter by Skill", class: "form-label" %>
+      <%= select_tag :skill_id, options_for_select([['Select Skill', '']] + @skills.map { |skill| [skill.name, skill.id] }, params[:skill_id]), class: "form-select" %>
+    </div>
+    <div class="col-md-3">
+      <%= label_tag :category_id, "Filter by Category", class: "form-label" %>
+      <%= select_tag :category_id, options_for_select([['Select Category', '']] + @categories.map { |category| [category.name, category.id] }, params[:category_id]), class: "form-select" %>
+    </div>
+    <div class="col-md-3">
+      <%= label_tag :search, "Search by Title", class: "form-label" %>
+      <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "Enter job title" %>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <%= submit_tag "Search", class: "custom-button" %>
+      <%= link_to "Clear Filters", jobs_path, class: "btn btn-outline-secondary" %>
+    </div>
+  </div>
+<% end %>
+
+<%= form_tag jobs_path, method: :get, local: true, class: "mb-4" do %>
+  <%= hidden_field_tag :skill_id, params[:skill_id] if params[:skill_id].present? %>
+  <%= hidden_field_tag :category_id, params[:category_id] if params[:category_id].present? %>
+  <%= hidden_field_tag :search, params[:search] if params[:search].present? %>
+  <div class="row">
+    <div class="col-md-2">
+      <%= label_tag :sort_by, "Sort by", class: "form-label" %>
+      <%= select_tag :sort_by,
+                     options_for_select([["Select Order", ""], ["Closing Date (Asc)", "closing_date_asc"], ["Closing Date (Desc)", "closing_date_desc"], ["Created At (Asc)", "created_at_asc"], ["Created At (Desc)", "created_at_desc"]]),
+                     { class: "form-control sort_by", id: "sort_by", onchange: "this.form.submit()" } %>
+    </div>
+  </div>
+<% end %>
+
+        <div class="job-listings">
+            <% @jobs.each do |job| %>
+            <div class="card mb-3 ">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5 class="card-title"><%= job.title%></h5>
+                            <p class="card-text mb-1"><%= job.location %></p>
+                            <p class="card-text"><small class="text-muted"><%= job.experience_required %>+ years experience</small></p>
+                            <p class="card-text"><small class="text-muted">Category: <%= job.category.name %></small></p>
+                            <p class="card-text"><small class="text-muted"><strong>Last Date:</strong><%= job.closing_date.to_date %></small></p>
+                            <p class="card-text"><small class="text-muted"><strong>Posted At:</strong><%= job.created_at.to_date %></small></p>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <p class="card-text mt-3"><%= job.description.truncate(200) %></p>
+                            <a href="<%= job_path(job) %>" class="arrow-link pb-2">
+                        <i class="bi bi-arrow-right custom-button"></i>
+                    </a>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            <%end%>
+        </div>
+
+<div class="flickr_pagination my-4">
+    <%= will_paginate @jobs, :container => false %>
+</div>
+  </div>
+  </div>
+

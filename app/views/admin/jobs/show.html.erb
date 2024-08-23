@@ -1,0 +1,80 @@
+<div class="container my-5">
+  <%= render 'jobs/job_detail' %>
+
+  <h1 id="applications-start">Job Applications</h1>
+
+  <%= form_tag admin_job_path(@job), method: :get, class: 'mb-4' do %>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="status">Application Status</label>
+          <%= select_tag :status, options_for_select([['All', ''], ['Under Review', 'under_review'], ['Rejected', 'rejected'], ['Shortlisted', 'shortlisted']], params[:status]), class: 'form-control' %>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="fit-score-min">Fit Score (Min)</label>
+          <%= number_field_tag :fit_score_min, params[:fit_score_min], class: 'form-control', min: 0, max: 100, placeholder: 'Minimum' %>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="fit-score-max">Fit Score (Max)</label>
+          <%= number_field_tag :fit_score_max, params[:fit_score_max], class: 'form-control', min: 0, max: 100, placeholder: 'Maximum' %>
+        </div>
+      </div>
+       <div class="col-md-3 d-flex align-items-end">
+    <%= submit_tag 'Filter', class: 'custom-button mx-3' %>
+     <%= link_to 'Clear Filters', admin_job_path(@job), class: 'btn btn-secondary' %>
+     </div>
+    </div>
+   
+  <% end %>
+
+  <%= form_tag admin_job_path(@job), method: :get, class: 'mb-4' do %>
+  <%= hidden_field_tag :status, params[:status] if params[:status].present? %>
+  <%= hidden_field_tag :fit_score_min, params[:fit_score_min] if params[:fit_score_min].present? %>
+  <%= hidden_field_tag :fit_score_max, params[:fit_score_max] if params[:fit_score_max].present? %>
+<div class="form-group mb-4 col-md-2">
+  <label for="sort-by">Sort By:</label>
+  <%= select_tag :sort_by, options_for_select([['Fit Score (Descending)', 'fit-score-desc'], ['Fit Score (Ascending)', 'fit-score-asc'], ['Application Date (Descending)', 'date-desc'], ['Application Date (Ascending)', 'date-asc'], ['Applicant Name (A-Z)', 'name-asc'], ['Applicant Name (Z-A)', 'name-desc']], params[:sort_by]), class: 'form-control sort_by', onchange: 'this.form.submit()' %>
+</div>
+ <% end %>
+
+  <!-- Table View -->
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Fit Score</th>
+        <th>Status</th>
+        <th>created_at</th>
+        <th>Resume</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @applications.each do |application| %>
+        <tr>
+          <td><%= application.name %></td>
+          <td><%= application.email %></td>
+          <td><%= application.fit_score %>%</td>
+          <td><%= application.status %></td>
+          <td><%= application.created_at.to_date %></td>
+          <td><%= link_to 'View Resume', url_for(application.resume), target: '_blank' %></td>
+          <td>
+            <% if application.under_review? %>
+              <%= button_to 'Shortlist', shortlist_admin_job_application_path(@job, application), method: :patch, class: 'btn btn-success btn-sm', data: { turbo_confirm: 'Are you sure you want to shortlist this application?' } %>
+              <%= button_to 'Reject', reject_admin_job_application_path(@job, application), method: :patch, class: 'btn btn-danger btn-sm mt-2', data: { turbo_confirm: 'Are you sure you want to reject this application?' } %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<div class="flickr_pagination mt-4">
+    <%= will_paginate @applications, :container => false %>
+</div>
+</div>

@@ -1,0 +1,12 @@
+# config/sidekiq.yml
+:concurrency: 5
+:queues:
+  - default
+:scheduler:
+  :schedule:
+    update_job_status:
+      cron: "*/1 * * * *"  # Runs every day at 11:59 PM
+      #cron: '59 23 * * *',
+      class: "UpdateJobStatusJob"
+
+  

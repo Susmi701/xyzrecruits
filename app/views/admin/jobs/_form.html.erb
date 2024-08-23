@@ -1,0 +1,115 @@
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-xl-9">
+        <div class="card" style="border-radius: 15px;">
+          <div class="card-body">
+            <%= form_for([:admin, @job], local: true) do |form| %>
+              <div class="form-group row align-items-center pt-4 pb-3">
+                <div class="col-md-3">
+                  <%= form.label :title, class: 'col-form-label' %>
+                </div>
+                <div class="col-md-9">
+                  <%= form.text_field :title, class: 'form-control form-control-lg' %>
+                  <%= render 'common/error_messages', errors: @job.errors[:title] %>
+                </div>
+              </div>
+
+              <div class="form-group row align-items-center py-3">
+                <div class="col-md-3">
+                  <%= form.label :description, class: 'col-form-label' %>
+                </div>
+                <div class="col-md-9">
+                  <%= form.text_area :description, rows: 5, class: 'form-control form-control-lg' %>
+                  <%= render 'common/error_messages', errors: @job.errors[:description] %>
+                </div>
+              </div>
+
+              <div class="form-group row align-items-center py-3">
+                <div class="col-md-3">
+                  <%= form.label :status, class: 'col-form-label' %>
+                </div>
+                <div class="col-md-9">
+                  <%= form.check_box :status, class: 'form-check-input' %>
+                 <%= render 'common/error_messages', errors: @job.errors[:status] %>
+                </div>
+              </div>
+
+              <div class="form-group row align-items-center py-3">
+                <div class="col-md-3">
+                  <%= form.label :category_id, 'Category', class: 'col-form-label' %>
+                </div>
+                <div class="col-md-9">
+                  <%= form.collection_select :category_id, Category.all, :id, :name, { prompt: 'Please select' }, { class: 'form-control form-control-lg' } %>
+              <%= render 'common/error_messages', errors: @job.errors[:category_id] %>
+                </div>
+              </div>
+
+              <div class="form-group row align-items-center py-3">
+                <div class="col-md-3">
+                  <%= form.label :experience_required, 'Experience Required (Years)', class: 'col-form-label' %>
+                </div>
+                <div class="col-md-9">
+                  <%= form.select :experience_required, (0..30).to_a, { prompt: 'Please select' }, { class: 'form-control form-control-lg' } %>
+               <%= render 'common/error_messages', errors: @job.errors[:experience_required] %>
+                </div>
+              </div>
+
+              <div class="form-group row align-items-center py-3">
+                <div class="col-md-3">
+                  <%= form.label :location, class: 'col-form-label' %>
+                </div>
+                <div class="col-md-9">
+                  <%= form.text_field :location, class: 'form-control form-control-lg' %>
+                 <%= render 'common/error_messages', errors: @job.errors[:location] %>
+                </div>
+              </div>
+
+              <div class="form-group row align-items-center py-3">
+                <div class="col-md-3">
+                  <%= form.label :educational_qualification, class: 'col-form-label' %>
+                </div>
+                <div class="col-md-9">
+                  <%= form.text_field :educational_qualification, class: 'form-control form-control-lg' %>
+                  <%= render 'common/error_messages', errors: @job.errors[:educational_qualification] %>
+                </div>
+              </div>
+
+              <div class="form-group row align-items-center py-3">
+                <div class="col-md-3">
+                  <%= form.label :job_type, 'Job Type', class: 'col-form-label' %>
+                </div>
+                <div class="col-md-9">
+                  <%= form.select :job_type, Job.job_types.keys.map { |key| [key.humanize, key] }, { prompt: 'Please select' }, { class: 'form-control form-control-lg' } %>
+                <%= render 'common/error_messages', errors: @job.errors[:job_type] %>
+                </div>
+              </div>
+
+              <div class="form-group row align-items-center py-3">
+                <div class="col-md-3">
+                  <%= form.label :closing_date, 'Closing Date', class: 'col-form-label' %>
+                </div>
+                <div class="col-md-9">
+                  <%= form.date_select :closing_date, class: 'form-control form-control-lg' %>
+                  <%= render 'common/error_messages', errors: @job.errors[:closing_date] %>
+                </div>
+              </div>
+
+              <div class="form-group row align-items-center py-3">
+                <div class="col-md-3">
+                  <%= form.label :skills, 'Skills', class: 'col-form-label' %>
+                </div>
+                <div class="col-md-9">
+                  <%= form.collection_select :skill_ids, Skill.all, :id, :name, { prompt: 'Please select' }, { multiple: true, size: 10, class: 'form-control' } %>
+                 <%= render 'common/error_messages', errors: @job.errors[:skill_ids] %>
+                </div>
+              </div>
+              <div class="p-4 text-center">
+                <%= form.submit class: 'custom-button' %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+

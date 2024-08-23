@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark-blue bg ">
+  <a class="navbar-brand txt ps-3" href="<%= root_path %>">MyApp</a>
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav mx-auto">
+      <li class="nav-item">
+        <%= link_to 'Home', root_path, class: 'nav-link' %>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'About', about_path, class: 'nav-link' %>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'Contact', contact_path, class: 'nav-link' %>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'Career', jobs_path, class: 'nav-link' %>
+      </li>
+    </ul>
+  </div>
+</nav>
