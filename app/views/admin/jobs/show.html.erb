@@ -37,44 +37,40 @@
   <%= hidden_field_tag :fit_score_max, params[:fit_score_max] if params[:fit_score_max].present? %>
 <div class="form-group mb-4 col-md-2">
   <label for="sort-by">Sort By:</label>
-  <%= select_tag :sort_by, options_for_select([['Fit Score (Descending)', 'fit-score-desc'], ['Fit Score (Ascending)', 'fit-score-asc'], ['Application Date (Descending)', 'date-desc'], ['Application Date (Ascending)', 'date-asc'], ['Applicant Name (A-Z)', 'name-asc'], ['Applicant Name (Z-A)', 'name-desc']], params[:sort_by]), class: 'form-control sort_by', onchange: 'this.form.submit()' %>
+  <%= select_tag :sort_by, options_for_select([['Fit Score (Descending)', 'fit-score-desc'], ['Fit Score (Ascending)', 'fit-score-asc'], ['Application Date (Descending)', 'date-desc'], ['Application Date (Ascending)', 'date-asc']], params[:sort_by]), class: 'form-control sort_by', onchange: 'this.form.submit()' %>
 </div>
  <% end %>
 
-  <!-- Table View -->
-  <table class="table table-striped table-hover">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Fit Score</th>
-        <th>Status</th>
-        <th>created_at</th>
-        <th>Resume</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @applications.each do |application| %>
-        <tr>
-          <td><%= application.name %></td>
-          <td><%= application.email %></td>
-          <td><%= application.fit_score %>%</td>
-          <td><%= application.status %></td>
-          <td><%= application.created_at.to_date %></td>
-          <td><%= link_to 'View Resume', url_for(application.resume), target: '_blank' %></td>
-          <td>
-            <% if application.under_review? %>
-              <%= button_to 'Shortlist', shortlist_admin_job_application_path(@job, application), method: :patch, class: 'btn btn-success btn-sm', data: { turbo_confirm: 'Are you sure you want to shortlist this application?' } %>
-              <%= button_to 'Reject', reject_admin_job_application_path(@job, application), method: :patch, class: 'btn btn-danger btn-sm mt-2', data: { turbo_confirm: 'Are you sure you want to reject this application?' } %>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <div id="applications-table">
+    <%= render 'admin/jobs/application', applications: @applications, job: @job %>
+  </div>
 
 <div class="flickr_pagination mt-4">
     <%= will_paginate @applications, :container => false %>
 </div>
 </div>
+
+// Add this JavaScript to your asset pipeline or in a separate file
+
+$(document).ready(function() {
+  // Filter form submission
+  $('#filter-form').on('submit', function(e) {
+    e.preventDefault();
+    $.ajax({
+      url: $(this).attr('action'),
+      type: 'GET',
+      data: $(this).serialize(),
+      dataType: 'script'
+    });
+  });
+
+  // Sort dropdown change
+  $('#sort-form .sort_by').on('change', function() {
+    $.ajax({
+      url: $('#sort-form').attr('action'),
+      type: 'GET',
+      data: $('#sort-form').serialize(),
+      dataType: 'script'
+    });
+  });
+});

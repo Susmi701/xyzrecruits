@@ -39,7 +39,7 @@
                   <%= form.label :category_id, 'Category', class: 'col-form-label' %>
                 </div>
                 <div class="col-md-9">
-                  <%= form.collection_select :category_id, Category.all, :id, :name, { prompt: 'Please select' }, { class: 'form-control form-control-lg' } %>
+                  <%= form.collection_select :category_id, @categories, :id, :name, { prompt: 'Please select' }, { class: 'form-control form-control-lg' } %>
               <%= render 'common/error_messages', errors: @job.errors[:category_id] %>
                 </div>
               </div>
@@ -99,7 +99,7 @@
                   <%= form.label :skills, 'Skills', class: 'col-form-label' %>
                 </div>
                 <div class="col-md-9">
-                  <%= form.collection_select :skill_ids, Skill.all, :id, :name, { prompt: 'Please select' }, { multiple: true, size: 10, class: 'form-control' } %>
+                  <%= form.collection_select :skill_ids, @skills, :id, :name, { prompt: 'Please select' }, { multiple: true, size: 10, class: 'form-control' } %>
                  <%= render 'common/error_messages', errors: @job.errors[:skill_ids] %>
                 </div>
               </div>

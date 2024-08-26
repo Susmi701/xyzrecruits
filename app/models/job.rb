@@ -12,7 +12,7 @@ class Job < ApplicationRecord
   }
 
   validates :title, presence: true, length: { maximum: 100 }
-  validates :description, presence: true
+  validates :description, presence: true, length: { minimum: 10, maximum: 5000 }
   validates :status, inclusion: { in: [true, false] }
   validates :experience_required,presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :location, presence: true, length: { maximum: 255 }

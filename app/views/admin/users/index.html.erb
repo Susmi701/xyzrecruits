@@ -24,7 +24,7 @@
                             <td><%= user.created_at.to_date %></td>
                             <td><%= user.status%></td>
                             <td>
-                                <% if (current_user == user || current_user.admin?) %>
+                                <% if (current_user == user || current_user.admin?) && !user.admin?  %>
                                       <%= link_to admin_user_path(user), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
                                         <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="Delete" style="height: 22px; width: 22px;">
                                     <% end %>

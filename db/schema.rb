@@ -107,18 +107,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_12_123407) do
     t.index ["category_id"], name: "index_jobs_on_category_id"
   end
 
-    create_table "page_contents", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-      t.datetime "created_at", null: false
-      t.datetime "updated_at", null: false
-      t.string "home_header"
-      t.text "mission"
-      t.text "vision"
-      t.string "about_header"
-      t.text "about_us"
-      t.text "history"
-      t.string "ceo"
-      t.string "contact_header"
-    end
+  create_table "page_contents", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "home_header"
+    t.text "mission"
+    t.text "vision"
+    t.string "about_header"
+    t.text "about_us"
+    t.text "history"
+    t.string "ceo"
+    t.string "contact_header"
+  end
 
   create_table "skills", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"

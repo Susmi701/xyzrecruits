@@ -1,89 +1,58 @@
 <h2 class="text-center m-4 pt-4"> Job Directory</h2>
-<%= form_tag admin_jobs_path, method: :get, local: true, class: "mb-4" do %>
-  <div class="row">
-    <div class="col-md-3">
-      <%= label_tag :skill_id, "Filter by Skill", class: "form-label" %>
-      <%= select_tag :skill_id, options_for_select([['Select Skill', '']] + @skills.map { |skill| [skill.name, skill.id] }), class: "form-select" %>
+
+<%= render partial: 'jobs/job_filter', locals: { path: admin_jobs_path} %>
+
+<%= render partial: 'jobs/job_sort', locals: { path: admin_jobs_path } %>
+
+<table class="table table-striped table-hover table-bordered ">
+  <% if @jobs.any? %>
+    <thead >
+        <tr>
+            <th>Position</th>
+            <th>Category</th>
+            <th>closing_date</th>
+            <th>created_at</th>
+            <th>Status </th>
+            <th>Actions</th>
+        </tr>    
+    </thead>
+    <tbody>
+        <% @jobs.each do |job| %>
+          <tr>
+            <td><%= job.title %></td>
+            <td><%= job.category.name %></td>
+            <td><%= job.closing_date.to_date  %></td>
+            <td><%= job.created_at.strftime('%Y-%m-%d')  %></td>
+            <td style="color: <%= job.status ? 'green' : 'red' %>;">
+              <%= job.status ? 'ACTIVE' : 'INACTIVE' %>
+            </td>
+            <td class="d-flex justify-content-around">
+              <% if (current_user) %>
+
+                <%= link_to admin_job_path(job) do %>
+                    <img src="https://static.thenounproject.com/png/201934-200.png" alt="Delete" style="height: 28px; width: 28px;">
+                <% end %>
+
+                <%= link_to edit_admin_job_path(job) do %>
+                    <img src="https://www.freeiconspng.com/uploads/edit-editor-pen-pencil-write-icon--4.png" alt="Edit" style="height: 22px; width: 20px;">
+                <% end %>
+                <% if current_user.admin? %>
+                  <%= link_to admin_job_path(job), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+                      <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="Another Icon" style="height: 22px; width: 22px;">
+                  <% end %>
+                <% end %>
+              <%end%>
+            </td>
+          </tr>
+        <% end %>
+    </tbody>
+  <% else %>
+    <div class="alert alert-info text-center">
+      <strong>No Jobs found</strong>
     </div>
-    <div class="col-md-3">
-      <%= label_tag :category_id, "Filter by Category", class: "form-label" %>
-      <%= select_tag :category_id, options_for_select([['Select Category', '']] + @categories.map { |category| [category.name, category.id] }), class: "form-select" %>
-    </div>
-    <div class="col-md-3">
-      <%= label_tag :status, "Filter by Status", class: "form-label" %>
-      <%= select_tag :status, options_for_select([['All', ''], ["Active", true], ["Inactive", false]], params[:status]), class: "form-select" %>
-    </div>
-    <div class="col-md-3 d-flex align-items-end">
-      <%= submit_tag "Apply Filters", class: "custom-button mx-2" %>
-      <%= link_to "Clear Filters", admin_jobs_path, class: "btn btn-outline-secondary" %>
-    </div>
-  </div>
-<% end %>
+  <% end %>
+</table>
 
-
-<%= form_tag admin_jobs_path, method: :get, local: true, class: "mb-4" do %>
-  <%= hidden_field_tag :skill_id, params[:skill_id] if params[:skill_id].present? %>
-  <%= hidden_field_tag :category_id, params[:category_id] if params[:category_id].present? %>
-  <%= hidden_field_tag :status, params[:status] if params[:status].present? %>
-
-  <div class="row">
-    <div class="col-md-2">
-      <%= label_tag :sort_by, "Sort by", class: "form-label" %>
-      <%= select_tag :sort_by,
-                     options_for_select([["Select Order", ""], ["Closing Date (Asc)", "closing_date_asc"], ["Closing Date (Desc)", "closing_date_desc"], ["Created At (Asc)", "created_at_asc"], ["Created At (Desc)", "created_at_desc"]]),
-                     { class: "form-control sort_by", id: "sort_by", onchange: "this.form.submit()" } %>
-    </div>
-  </div>
-<% end %>
-
-
-
-            <table class="table table-striped table-hover table-bordered ">
-                <thead >
-                    <tr>
-                        <th>Position</th>
-                        <th>Category</th>
-                        <th>closing_date</th>
-                        <th>created_at</th>
-                        <th>Status </th>
-                        <th>Actions</th>
-                    </tr>    
-                </thead>
-                <tbody>
-                    <% @jobs.each do |job| %>
-                        <tr>
-                            <td><%= job.title %></td>
-                            <td><%= job.category.name %></td>
-                            <td><%= job.closing_date.to_date  %></td>
-                            <td><%= job.created_at.strftime('%Y-%m-%d')  %></td>
-                            <td style="color: <%= job.status ? 'green' : 'red' %>;">
-                              <%= job.status ? 'ACTIVE' : 'INACTIVE' %>
-                            </td>
-                            <td class="d-flex justify-content-around">
-                                <% if (current_user) %>
-
-                                <%= link_to admin_job_path(job) do %>
-                                    <img src="https://static.thenounproject.com/png/201934-200.png" alt="Delete" style="height: 28px; width: 28px;">
-                                <% end %>
-
-                                <%= link_to edit_admin_job_path(job) do %>
-                                    <img src="https://www.freeiconspng.com/uploads/edit-editor-pen-pencil-write-icon--4.png" alt="Edit" style="height: 22px; width: 20px;">
-                                <% end %>
-                          <% if current_user.admin? %>
-                                <%= link_to admin_job_path(job), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
-                                    <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="Another Icon" style="height: 22px; width: 22px;">
-                                <% end %>
-                           <% end %>
-                                    
-                                <%end%>
-                            </td>
-                        </tr>
-                    <% end %>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
 <div class="flickr_pagination my-4">
     <%= will_paginate @jobs, :container => false %>
 </div>

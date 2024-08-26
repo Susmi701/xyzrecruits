@@ -1,4 +1,6 @@
 class Admin::JobsController < ApplicationController
+  include JobsFilters
+
   before_action :authenticate_user!
   before_action :set_job, only: [:show, :edit, :update, :destroy]
   before_action :set_common_data, only: [:index, :new, :edit]
@@ -6,7 +8,7 @@ class Admin::JobsController < ApplicationController
 
   def index
     @jobs = Job.includes(:skills, :category).order(sort_order)
-    apply_filters
+    @jobs = apply_filters(@jobs)
     @jobs = @jobs.paginate(page: params[:page], per_page: 8)
   end
 
@@ -64,22 +66,6 @@ class Admin::JobsController < ApplicationController
                                 :location, :job_type, :closing_date, skill_ids: [])
   end
 
-  def apply_filters
-    @jobs = @jobs.joins(:skills).where(skills: { id: params[:skill_id] }) if params[:skill_id].present?
-    @jobs = @jobs.where(category_id: params[:category_id]) if params[:category_id].present?
-    @jobs = @jobs.where(status: params[:status]) if params[:status].present?
-  end
-
-  def sort_order
-    case params[:sort_by]
-    when "closing_date_asc" then { closing_date: :asc }
-    when "closing_date_desc" then { closing_date: :desc }
-    when "created_at_asc" then { created_at: :asc }
-    when "created_at_desc" then { created_at: :desc }
-    else { created_at: :desc }
-    end
-  end
-
   def filter_and_sort_applications(applications)
     applications = applications.where(status: params[:status]) if params[:status].present?
     applications = applications.where('fit_score >= ?', params[:fit_score_min]) if params[:fit_score_min].present?
@@ -90,8 +76,6 @@ class Admin::JobsController < ApplicationController
     when 'fit-score-asc' then applications.order(fit_score: :asc)
     when 'date-desc' then applications.order(created_at: :desc)
     when 'date-asc' then applications.order(created_at: :asc)
-    # when 'name-asc' then applications.order(name: :asc)
-    # when 'name-desc' then applications.order(name: :desc)
     else applications.order(fit_score: :desc)
     end
   end

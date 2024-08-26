@@ -9,7 +9,8 @@ class Application < ApplicationRecord
   
   before_save { self.email = email.downcase if email.present? }
   
-  validates :name, :resume, presence: true
+  validates :name, presence: true, length: { maximum: 50 }
+  validates :resume, presence: true
   validates :experience,presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :email, presence: true, length: { maximum: 105 }, format: { with: VALID_EMAIL_REGEX },
             uniqueness: { scope: :job_id, message: "You have already submitted an application for this job." }

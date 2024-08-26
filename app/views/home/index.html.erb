@@ -19,7 +19,7 @@
                 </a>
             </div>
             <div class="col-md-6">
-                 <%= image_tag @pagecontent.home_img, alt: "CEO Image", class: "img-fluid rounded text-center", style: "max-width: 100%; height: 80%;" %>
+<%= image_tag(@pagecontent.home_img.presence || 'home.jpg', alt: "CEO Image", class: "img-fluid rounded text-center", style: "max-width: 100%; height: 80%;") %>
 
             </div>
         </div>

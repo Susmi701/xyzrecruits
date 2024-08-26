@@ -4,6 +4,7 @@
         <div class="col-md-11">
             <%= render 'form'%>
             <table class="table table-striped table-hover table-bordered ">
+                 <% if @skills.any? %>
                 <thead >
                     <tr>
                         <th>Name</th>
@@ -25,6 +26,11 @@
                             </td>
                         </tr>
                     <% end %>
+                        <% else %>
+      <div class="alert alert-info text-center">
+        <strong>No skills found.</strong>
+      </div>
+    <% end %>
                 </tbody>
             </table>
         </div>

@@ -6,7 +6,7 @@
                     <p class=""><%= simple_format(@pagecontent.about_us) %></p>
                 </div>
                 <div class="col-md-4 text-end">
-<%= image_tag @pagecontent.ceo_img, alt: "CEO Image", class: "img-fluid rounded text-center", style: "max-width: 100%; height: auto;" %>
+<%= image_tag(@pagecontent.ceo_img.presence || 'ceo.jpg', alt: "CEO Image", class: "img-fluid rounded text-center", style: "max-width: 100%; height: auto;") %>
                     <p class=" mt-2"><%= @pagecontent.ceo %><br>CEO of RECUT</p>
                 </div>
             </div>

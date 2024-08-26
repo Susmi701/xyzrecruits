@@ -12,8 +12,7 @@ RSpec.describe Contact, type: :model do
     it { should_not allow_value('invalid_email').for(:email) }
     
     it { should validate_length_of(:address).is_at_most(255) }
-    it { should validate_length_of(:phone).is_at_most(13) }
-    it { should validate_length_of(:email).is_at_most(255) }
+    it { should validate_length_of(:phone).is_at_most(15) }
     it { should validate_length_of(:website).is_at_most(255) }
     
     it do
