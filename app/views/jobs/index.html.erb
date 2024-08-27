@@ -15,7 +15,11 @@
                 <h5 class="card-title"><%= job.title%></h5>
                 <p class="card-text mb-1"><%= job.location %></p>
                 <p class="card-text"><small class="text-muted"><%= job.experience_required %>+ years experience</small></p>
-                <p class="card-text"><small class="text-muted">Category: <%= job.category.name %></small></p>
+                <% if job.category.present? %>
+                  <p class="card-text"><small class="text-muted">Category: <%= job.category.name %></small></p>
+                <% else %>
+                  <p class="card-text"><small class="text-muted">Category: None</small></p>
+                <% end %>
                 <p class="card-text"><small class="text-muted"><strong>Last Date:</strong><%= job.closing_date.to_date %></small></p>
                 <p class="card-text"><small class="text-muted"><strong>Posted At:</strong><%= job.created_at.to_date %></small></p>
               </div>

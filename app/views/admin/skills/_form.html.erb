@@ -5,6 +5,9 @@
     <%= render 'common/error_messages', errors: @skill.errors[:name] %>
   </div>
   <div class="form-group mt-4">
-    <%= form.submit 'Add Skill', class: 'custom-button' %>
+    <%= form.submit class: 'custom-button' %>
+    <% if @skill.persisted? %>
+            <%= link_to 'Cancel', admin_skills_path, class: 'btn btn-secondary' %>
+        <% end %>
   </div>
 <% end %>

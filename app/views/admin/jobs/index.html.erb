@@ -20,8 +20,12 @@
         <% @jobs.each do |job| %>
           <tr>
             <td><%= job.title %></td>
-            <td><%= job.category.name %></td>
-            <td><%= job.closing_date.to_date  %></td>
+            <% if job.category.present? %>
+              <td><%= job.category.name %></td>
+            <% else %>
+              <td>None</td>
+            <% end %>
+                <td><%= job.closing_date.to_date  %></td>
             <td><%= job.created_at.strftime('%Y-%m-%d')  %></td>
             <td style="color: <%= job.status ? 'green' : 'red' %>;">
               <%= job.status ? 'ACTIVE' : 'INACTIVE' %>

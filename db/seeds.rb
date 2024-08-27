@@ -8,7 +8,7 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 # db/seeds.rb
-PageContent.create!(
+page_content =PageContent.create!(
   home_header: "Welcome to Our IT Company",
   mission: "To deliver cutting-edge technology solutions that drive innovation and success.To be the leading provider of IT services, recognized for our excellence and client-focused approach.To be the leading provider of IT services, recognized for our excellence and client-focused approach.To be the leading provider of IT services, recognized for our excellence and client-focused approach.To be the leading provider of IT services, recognized for our excellence and client-focused approach.To be the leading provider of IT services, recognized for our excellence and client-focused approach.To be the leading provider of IT services, recognized for our excellence and client-focused approach.To be the leading provider of IT services, recognized for our excellence and client-focused approach.To be the leading provider of IT services, recognized for our excellence and client-focused approach.",
   vision: "To be the leading provider of IT services, recognized for our excellence and client-focused approach.To be the leading provider of IT services, recognized for our excellence and client-focused approach.To be the leading provider of IT services, recognized for our excellence and client-focused approach.To be the leading provider of IT services, recognized for our excellence and client-focused approach.To be the leading provider of IT services, recognized for our excellence and client-focused approach.To be the leading provider of IT services, recognized for our excellence and client-focused approach.To be the leading provider of IT services, recognized for our excellence and client-focused approach.To be the leading provider of IT services, recognized for our excellence and client-focused approach.",
@@ -22,6 +22,17 @@ We are a forward-thinking IT company with a passion for technology and innovatio
   history: "Founded in 2010, we have grown from a small startup to a leading IT services provider. Our journey is marked by numerous milestones and achievements that reflect our commitment to excellence.Founded in 2010, we have grown from a small startup to a leading IT services provider. Our journey is marked by numerous milestones and achievements that reflect our commitment to excellence.Founded in 2010, we have grown from a small startup to a leading IT services provider. Our journey is marked by numerous milestones and achievements that reflect our commitment to excellence.Founded in 2010, we have grown from a small startup to a leading IT services provider. Our journey is marked by numerous milestones and achievements that reflect our commitment to excellence.Founded in 2010, we have grown from a small startup to a leading IT services provider. Our journey is marked by numerous milestones and achievements that reflect our commitment to excellence.Founded in 2010, we have grown from a small startup to a leading IT services provider. Our journey is marked by numerous milestones and achievements that reflect our commitment to excellence.Founded in 2010, we have grown from a small startup to a leading IT services provider. Our journey is marked by numerous milestones and achievements that reflect our commitment to excellence.Founded in 2010, we have grown from a small startup to a leading IT services provider. Our journey is marked by numerous milestones and achievements that reflect our commitment to excellence.Founded in 2010, we have grown from a small startup to a leading IT services provider. Our journey is marked by numerous milestones and achievements that reflect our commitment to excellence.Founded in 2010, we have grown from a small startup to a leading IT services provider. Our journey is marked by numerous milestones and achievements that reflect our commitment to excellence.Founded in 2010, we have grown from a small startup to a leading IT services provider. Our journey is marked by numerous milestones and achievements that reflect our commitment to excellence.Founded in 2010, we have grown from a small startup to a leading IT services provider. Our journey is marked by numerous milestones and achievements that reflect our commitment to excellence.",
   ceo: "Jane Doe",
   contact_header: "Contact Us,We are here to help!"
+)
+page_content.home_img.attach(
+  io: File.open(Rails.root.join('app/assets/images/home.jpg')),
+  filename: 'home.jpg',
+  content_type: 'image/jpeg'
+)
+
+page_content.ceo_img.attach(
+  io: File.open(Rails.root.join('app/assets/images/ceo.jpg')),
+  filename: 'ceo.jpg',
+  content_type: 'image/jpeg'
 )
 
 User.create!(

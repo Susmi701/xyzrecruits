@@ -1,8 +1,9 @@
-<h2 class="text-center m-4 pt-4">Category Directory</h2>
+<h2 class="text-center m-4 pt-4">Inquiry Directory</h2>
 <div class="container">
   <div class="row mt-5">
     <div class="col-md-11">
       <table class="table table-striped table-hover table-bordered">
+        <% if @inquiries.any? %>
         <thead>
           <tr>
             <th>Name</th>
@@ -29,6 +30,11 @@
             </tr>
           <% end %>
         </tbody>
+         <% else %>
+      <div class="alert alert-info text-center">
+        <strong>No inquiries found</strong>
+      </div>
+    <% end %>
       </table>
     </div>
   </div>

@@ -47,19 +47,19 @@
   </div>
 
 
-  <div class="form-group">
+  <div class="form-group pt-3">
     <%= form.label :home_img, "Home Image", class: 'form-label' %>
     <%= form.file_field :home_img, class: 'form-control-file' %>
     <%= render 'common/error_messages', errors: @page_content.errors[:home_img] %>
   </div>
 
-  <div class="form-group">
+  <div class="form-group py-3">
     <%= form.label :ceo_img, "CEO Image", class: 'form-label' %>
     <%= form.file_field :ceo_img, class: 'form-control-file' %>
     <%= render 'common/error_messages', errors: @page_content.errors[:ceo_img] %>
   </div>
 
   <div class="form-group">
-    <%= form.submit 'Save Changes', class: 'btn btn-primary' %>
+    <%= form.submit 'Save Changes', class: 'custom-button' %>
   </div>
 <% end %>

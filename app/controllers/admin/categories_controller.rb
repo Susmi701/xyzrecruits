@@ -1,6 +1,6 @@
 class Admin::CategoriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_category, only: [:edit,:update]
+  before_action :set_category, only: [:edit,:update,:destroy]
   
   def index
     @categories = Category.paginate(page: params[:page], per_page: 10)
@@ -30,10 +30,10 @@ class Admin::CategoriesController < ApplicationController
     end
   end
 
-  # def destroy
-  #   @category.destroy
-  #   redirect_to admin_categories_path, notice: 'Category was successfully destroyed.'
-  # end
+  def destroy
+    @category.destroy
+    redirect_to admin_categories_path, alert: 'Category was successfully destroyed.'
+  end
 
   private
 

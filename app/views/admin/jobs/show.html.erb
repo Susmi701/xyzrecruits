@@ -3,7 +3,7 @@
 
   <h1 id="applications-start">Job Applications</h1>
 
-  <%= form_tag admin_job_path(@job), method: :get, class: 'mb-4' do %>
+  <%= form_tag admin_job_path(@job), method: :get, class: 'mb-4', id: 'filter-form' do %>
     <div class="row">
       <div class="col-md-3">
         <div class="form-group">
@@ -31,7 +31,7 @@
    
   <% end %>
 
-  <%= form_tag admin_job_path(@job), method: :get, class: 'mb-4' do %>
+  <%= form_tag admin_job_path(@job), method: :get, class: 'mb-4', id: 'sort-form'  do %>
   <%= hidden_field_tag :status, params[:status] if params[:status].present? %>
   <%= hidden_field_tag :fit_score_min, params[:fit_score_min] if params[:fit_score_min].present? %>
   <%= hidden_field_tag :fit_score_max, params[:fit_score_max] if params[:fit_score_max].present? %>
@@ -50,27 +50,30 @@
 </div>
 </div>
 
-// Add this JavaScript to your asset pipeline or in a separate file
-
+<%# <script>
 $(document).ready(function() {
-  // Filter form submission
+  function updateApplications(url, data) {
+    $.ajax({
+      url: url,
+      type: 'GET',
+      data: data,
+      dataType: 'script'
+    });
+  }
+
   $('#filter-form').on('submit', function(e) {
     e.preventDefault();
-    $.ajax({
-      url: $(this).attr('action'),
-      type: 'GET',
-      data: $(this).serialize(),
-      dataType: 'script'
-    });
+    updateApplications($(this).attr('action'), $(this).serialize());
   });
 
-  // Sort dropdown change
   $('#sort-form .sort_by').on('change', function() {
-    $.ajax({
-      url: $('#sort-form').attr('action'),
-      type: 'GET',
-      data: $('#sort-form').serialize(),
-      dataType: 'script'
-    });
+    updateApplications($('#sort-form').attr('action'), $('#sort-form').serialize());
+  });
+
+  $('#clear-filters').on('click', function(e) {
+    e.preventDefault();
+    $('#filter-form')[0].reset();
+    updateApplications($(this).attr('href'), {});
   });
 });
+</script> %>

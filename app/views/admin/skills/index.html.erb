@@ -19,6 +19,9 @@
                             <td><%= skill.created_at.strftime('%Y-%m-%d')  %></td>
                             <td>
                                 <% if (current_user) %>
+                                <%= link_to edit_admin_skill_path(skill) do %>
+                                    <img src="https://www.freeiconspng.com/uploads/edit-editor-pen-pencil-write-icon--4.png" alt="Edit" style="height: 22px; width: 20px;">
+                                <% end %>
                                        <%= link_to admin_skill_path(skill), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
                                         <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="Delete" style="height: 22px; width: 22px;">
                                     <% end %>

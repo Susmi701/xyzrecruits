@@ -10,11 +10,16 @@ class Admin::JobsController < ApplicationController
     @jobs = Job.includes(:skills, :category).order(sort_order)
     @jobs = apply_filters(@jobs)
     @jobs = @jobs.paginate(page: params[:page], per_page: 8)
+    
   end
 
   def show
     @applications = filter_and_sort_applications(@job.applications)
                     .paginate(page: params[:page], per_page: 8)
+      respond_to do |format|
+        format.html
+        format.js
+      end
   end
 
   def new

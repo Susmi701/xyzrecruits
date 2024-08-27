@@ -1,0 +1,2 @@
+$('#applications-table').html('<%= j render "admin/jobs/application", applications: @applications, job: @job %>');
+$('.flickr_pagination').html('<%= j will_paginate @applications, container: false %>');

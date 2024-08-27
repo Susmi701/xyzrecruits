@@ -22,8 +22,8 @@ devise_for :users, controllers: {
     resource :contacts, only: [:edit, :update]
     resources :inquiries, only: [:index]
     resources :users, only: [:index, :new, :create, :destroy]
-    resources :skills, only: [:index,:create, :destroy]
-    resources :categories, except: [:destroy]
+    resources :skills
+    resources :categories
     resources :jobs do
       resources :applications, only: [] do
         member do
