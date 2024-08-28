@@ -145,7 +145,7 @@ RSpec.describe "Admin::Jobs", type: :request do
     end
 
     it 'redirects to the jobs index' do
-      expect(response).to redirect_to(admin_jobs_path)
+      expect(response).to redirect_to(admin_job_path(job))
     end
   end
 

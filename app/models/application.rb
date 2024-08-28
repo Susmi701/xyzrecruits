@@ -17,6 +17,7 @@ class Application < ApplicationRecord
 
   validate :resume_is_pdf_and_not_too_large
 
+
   private
 
   def resume_is_pdf_and_not_too_large
@@ -33,25 +34,7 @@ class Application < ApplicationRecord
 
   def calculate_fit_score
     return unless job.present? 
-    self.fit_score = (skill_score * 0.7) + (experience_score * 0.3)
+    self.fit_score = ApplicationFitScoreCalculator.new(self).calculate
   end
 
-  def skill_score
-    job_skill_ids = job.skills.pluck(:id)
-    applicant_skill_ids = skills.map(&:id)
-    common_skills_count = (job_skill_ids & applicant_skill_ids).count
-    total_skills_count = job_skill_ids.count
-    total_skills_count.zero? ? 100 : (common_skills_count.to_f / total_skills_count) * 100
-  end
-
-  def experience_score
-    required_experience = job.experience_required
-    applicant_experience = experience || 0
-    return 0 unless required_experience.present?
-    if applicant_experience >= required_experience
-      100
-    else
-      (experience.to_f / required_experience * 100).round(2)
-    end
-  end
 end

@@ -47,7 +47,7 @@ RSpec.describe "Admin::Contacts", type: :request do
         it 'updates the contact' do
           contact.reload
           expect(contact.address).to eq('address')
-          expect(contact.phone).to eq('123456789')
+          expect(contact.phone).to eq('123456789123')
           expect(contact.email).to eq('user@gmail.com')
           expect(contact.website).to eq('http://example.com')
         end

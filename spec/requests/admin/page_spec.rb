@@ -76,4 +76,5 @@ RSpec.describe "Admin::Pages", type: :request do
       it_behaves_like "admin access required"
     end
   end
+  
 end

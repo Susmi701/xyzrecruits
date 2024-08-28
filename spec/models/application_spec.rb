@@ -16,8 +16,8 @@ RSpec.describe Application, type: :model do
     it { should validate_presence_of(:resume) }
     it { should validate_presence_of(:experience) }
     it { should validate_numericality_of(:experience).only_integer.is_greater_than_or_equal_to(0) }
-    it { should validate_length_of(:email).is_at_most(105) }
     it { should validate_presence_of(:email) }
+    it { should validate_length_of(:email).is_at_most(105) }
     it { should allow_value("test@example.com").for(:email) }
     it { should_not allow_value("test@example").for(:email) }
     it { should_not allow_value("test@.com").for(:email) }
@@ -51,7 +51,6 @@ RSpec.describe Application, type: :model do
       end
     end
   end
-
 
   describe '#calculate_fit_score' do
   let(:skill1) { create(:skill) }
@@ -92,5 +91,5 @@ RSpec.describe Application, type: :model do
       expect(application.fit_score).to eq(expected_fit_score)
     end
   end
-end
+  end
 end

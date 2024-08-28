@@ -41,7 +41,7 @@ class Admin::JobsController < ApplicationController
 
   def update
     if @job.update(job_params)
-      redirect_to admin_jobs_path, notice: 'Job updated successfully.'
+      redirect_to admin_job_path(@job), notice: 'Job updated successfully.'
     else
       set_common_data
       render :edit, status: :unprocessable_entity

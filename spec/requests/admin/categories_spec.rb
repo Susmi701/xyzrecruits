@@ -108,5 +108,36 @@ RSpec.describe "Admin::Categories", type: :request do
         it_behaves_like "an unprocessable_entity"
       end
     end
+
+    describe 'DELETE #destroy' do
+      let!(:category_with_jobs) { create(:category) }
+      let!(:category_without_jobs) { create(:category) }
+      context 'when the category has associated jobs' do
+        before do
+          create(:job, category: category_with_jobs)
+        end
+
+        it 'does not delete the category and redirects with an alert' do
+          expect {
+            delete admin_category_path(category_with_jobs)
+          }.not_to change(Category, :count)
+
+          expect(response).to redirect_to(admin_categories_path)
+          expect(flash[:alert]).to eq('Cannot delete category because it has associated jobs.')
+        end
+      end
+
+      context 'when the category does not have associated jobs' do
+        it 'deletes the category and redirects with a notice' do
+          expect {
+            delete admin_category_path(category_without_jobs)
+          }.to change(Category, :count).by(-1)
+
+          expect(response).to redirect_to(admin_categories_path)
+          expect(flash[:notice]).to eq('Category was successfully destroyed.')
+        end
+      end
+    end
+
   end
 end

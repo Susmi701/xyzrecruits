@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :job do
-    title {"Job Title"}
+    sequence(:title) { |n| "Job Title #{n}" }
     description {"Title Description"}
     experience_required {15}
     educational_qualification {"Btech"}

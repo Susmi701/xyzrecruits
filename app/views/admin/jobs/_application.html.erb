@@ -6,6 +6,7 @@
           <th>Email</th>
           <th>Fit Score</th>
           <th>Status</th>
+          <th>Experience</th>
           <th>created_at</th>
           <th>Resume</th>
           <th>Action</th>
@@ -19,6 +20,12 @@
             <td><%= application.email %></td>
             <td><%= application.fit_score %>%</td>
             <td><%= application.status %></td>
+            <td><%= application.experience %></td>
+            <td>
+  <% application.skills.each do |skill| %>
+    <%= skill.name %><br>
+  <% end %>
+</td>
             <td><%= application.created_at.to_date %></td>
             <td><%= link_to 'View Resume', url_for(application.resume), target: '_blank' %></td>
             <td>

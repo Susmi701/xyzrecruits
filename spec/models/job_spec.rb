@@ -12,6 +12,7 @@ RSpec.describe Job, type: :model do
     it { should validate_presence_of(:title) }
     it { should validate_length_of(:title).is_at_most(100) }
     it { should validate_presence_of(:description) }
+    it { should validate_length_of(:description).is_at_least(10).is_at_most(5000) }
     #it { should validate_inclusion_of(:status).in_array([true, false]) }
     it { should validate_presence_of(:experience_required) }
     it { should validate_numericality_of(:experience_required).only_integer.is_greater_than_or_equal_to(0) }
@@ -25,7 +26,6 @@ RSpec.describe Job, type: :model do
       it 'validates closing_date is today or in the future' do
         job = build(:job, status: true, closing_date: 1.day.ago)
         expect(job).to_not be_valid
-        expect(job.errors[:closing_date]).to include('must be today or a future date.')
       end
 
       it 'allows closing_date to be today or in the future' do

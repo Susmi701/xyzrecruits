@@ -31,8 +31,12 @@ class Admin::CategoriesController < ApplicationController
   end
 
   def destroy
-    @category.destroy
-    redirect_to admin_categories_path, alert: 'Category was successfully destroyed.'
+    if @category.jobs.exists?
+      redirect_to admin_categories_path, alert: 'Cannot delete category because it has associated jobs.'
+    else
+      @category.destroy
+      redirect_to admin_categories_path, notice: 'Category was successfully destroyed.'
+    end
   end
 
   private
