@@ -25,7 +25,7 @@ class Job < ApplicationRecord
   private
 
   def recalculate_fit_scores
-    RecalculateFitScoresJob.perform_later(id)
+    RecalculateFitScoresJob.perform_now(id)
   end
 
   def relevant_changes?

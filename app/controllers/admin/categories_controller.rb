@@ -1,9 +1,9 @@
 class Admin::CategoriesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_category, only: [:edit,:update,:destroy]
-  
+  before_action :set_categories, only: [:index, :create, :edit, :update]
+
   def index
-    @categories = Category.paginate(page: params[:page], per_page: 10)
     @category = Category.new
   end
 
@@ -12,12 +12,11 @@ class Admin::CategoriesController < ApplicationController
     if @category.save
       redirect_to admin_categories_path, notice: 'Category was successfully created.'
     else
-      @categories = Category.paginate(page: params[:page], per_page: 10)
       render :index, status: :unprocessable_entity
     end
   end
+
   def edit
-    @categories = Category.paginate(page: params[:page], per_page: 10)
     render :index
   end
 
@@ -25,7 +24,6 @@ class Admin::CategoriesController < ApplicationController
     if @category.update(category_params)
       redirect_to admin_categories_path, notice: 'Category was successfully updated.'
     else
-      @categories = Category.paginate(page: params[:page], per_page: 10)
       render :index, status: :unprocessable_entity
     end
   end
@@ -48,4 +46,9 @@ class Admin::CategoriesController < ApplicationController
   def category_params
     params.require(:category).permit(:name)
   end
+
+  def set_categories
+    @categories=Category.paginate(page: params[:page], per_page: 10)
+  end
+
 end

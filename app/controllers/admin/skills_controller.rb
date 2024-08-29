@@ -1,9 +1,9 @@
 class Admin::SkillsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_skill, only: [:edit,:update,:destroy]
+  before_action :set_skills, only: [:index, :create, :edit, :update]
 
   def index
-    @skills = Skill.paginate(page: params[:page], per_page: 10)
     @skill = Skill.new
   end
 
@@ -12,20 +12,17 @@ class Admin::SkillsController < ApplicationController
     if @skill.save
       redirect_to admin_skills_path, notice: 'Skill was successfully created.'
     else
-      @skills = Skill.paginate(page: params[:page], per_page: 10)
       render :index, status: :unprocessable_entity
     end
   end
   def edit
-    @skills = Skill.paginate(page: params[:page], per_page: 10)
     render :index
   end
 
   def update
     if @skill.update(skill_params)
-      redirect_to admin_skills_path, notice: 'Category was successfully updated.'
+      redirect_to admin_skills_path, notice: 'Skill was successfully updated.'
     else
-      @skills = Skill.paginate(page: params[:page], per_page: 10)
       render :index, status: :unprocessable_entity
     end
   end
@@ -54,4 +51,9 @@ class Admin::SkillsController < ApplicationController
   def skill_params
     params.require(:skill).permit(:name)
   end
+
+  def set_skills
+    @skills = Skill.paginate(page: params[:page], per_page: 10)
+  end
+
 end

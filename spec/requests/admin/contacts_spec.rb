@@ -53,7 +53,7 @@ RSpec.describe "Admin::Contacts", type: :request do
         end
 
         it 'redirects to the edit page' do
-          expect(response).to redirect_to(edit_admin_contacts_path(contact))
+          expect(response).to redirect_to(edit_admin_contacts_path)
         end
 
         it 'sets a flash notice message' do

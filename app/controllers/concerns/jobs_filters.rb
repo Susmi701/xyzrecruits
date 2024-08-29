@@ -1,18 +1,38 @@
 module JobsFilters
   extend ActiveSupport::Concern
 
-  # included do
-  #   before_action :set_common_data, only: [:index, :new, :edit]
-  # end
-
   private
 
   def apply_filters(jobs)
-    jobs = jobs.joins(:skills).where(skills: { id: params[:skill_id] }) if params[:skill_id].present?
-    jobs = jobs.where(category_id: params[:category_id]) if params[:category_id].present?
-    jobs = jobs.where(status: params[:status]) if params[:status].present?
-    jobs = jobs.where("title LIKE ?", "%#{params[:search]}%") if params[:search].present?
+    jobs = filter_by_skill(jobs)
+    jobs = filter_by_category(jobs)
+    jobs = filter_by_status(jobs)
+    jobs = filter_by_search(jobs)
     jobs
+  end
+
+  def filter_by_skill(jobs)
+    return jobs unless params[:skill_id].present?
+
+    jobs.joins(:skills).where(skills: { id: params[:skill_id] })
+  end
+
+  def filter_by_category(jobs)
+    return jobs unless params[:category_id].present?
+
+    jobs.where(category_id: params[:category_id])
+  end
+
+  def filter_by_status(jobs)
+    return jobs unless params[:status].present?
+
+    jobs.where(status: params[:status])
+  end
+
+  def filter_by_search(jobs)
+    return jobs unless params[:search].present?
+
+    jobs.where("title LIKE ?", "%#{params[:search]}%")
   end
 
   def sort_order

@@ -1,14 +1,15 @@
 class JobsController < ApplicationController
   include JobsFilters
 
-  before_action :set_job_and_ensure_active, only: [:show, :apply, :submit_application]
+  before_action :set_job,:ensure_active_job, only: [:show, :apply, :submit_application]
   before_action :set_common_data, only: [:index]
   
 
   def index
-    @jobs = Job.active.includes(:skills, :category).order(sort_order)
-    @jobs = apply_filters(@jobs)
-    @jobs = @jobs.paginate(page: params[:page], per_page: 8)
+    @jobs = Job.active.includes(:skills, :category)
+               .order(sort_order)
+               .then { |jobs| apply_filters(jobs) }
+               .paginate(page: params[:page], per_page: 8)
   end
 
   def show
@@ -34,14 +35,19 @@ class JobsController < ApplicationController
 
   private
 
-  def set_job_and_ensure_active
-    @job = Job.find_by(id: params[:id])
+  def set_job
+    @job = Job.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to jobs_path, alert: 'Job not found'
+  end
+
+  def ensure_active_job
     redirect_to jobs_path, alert: 'Job not found or inactive' unless @job&.status
   end
 
   def set_common_data
-    @skills ||= Skill.all
-    @categories ||= Category.all
+    @skills = Skill.all
+    @categories = Category.all
   end
 
   def application_params

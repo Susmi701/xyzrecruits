@@ -4,13 +4,12 @@ class Admin::ContactsController < ApplicationController
   before_action :set_contact, only: [:edit, :update]
 
   def edit
-    @contact = Contact.first 
   end
 
   def update
     if @contact.update(contact_params)
       flash[:notice] = "Contact was successfully updated."
-      redirect_to edit_admin_contacts_path(@contact)
+      redirect_to edit_admin_contacts_path
     else
       render :edit, status: :unprocessable_entity
     end

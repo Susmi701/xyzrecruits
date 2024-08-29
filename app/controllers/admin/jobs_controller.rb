@@ -7,19 +7,19 @@ class Admin::JobsController < ApplicationController
   before_action :authorize_admin, only: [:destroy]
 
   def index
-    @jobs = Job.includes(:skills, :category).order(sort_order)
-    @jobs = apply_filters(@jobs)
-    @jobs = @jobs.paginate(page: params[:page], per_page: 8)
+    # @jobs = Job.includes(:skills, :category).order(sort_order)
+    # @jobs = apply_filters(@jobs)
+    # @jobs = @jobs.paginate(page: params[:page], per_page: 8)
+    @jobs = Job.includes(:skills, :category)
+               .order(sort_order)
+               .then { |jobs| apply_filters(jobs) }
+               .paginate(page: params[:page], per_page: 8)
     
   end
 
   def show
     @applications = filter_and_sort_applications(@job.applications)
                     .paginate(page: params[:page], per_page: 8)
-      respond_to do |format|
-        format.html
-        format.js
-      end
   end
 
   def new
@@ -56,13 +56,14 @@ class Admin::JobsController < ApplicationController
   private
 
   def set_job
-    @job = Job.find_by(id: params[:id])
-    redirect_to jobs_path, alert: 'Job not found' unless @job
+    @job = Job.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+    redirect_to jobs_path, alert: 'Job not found'
   end
 
   def set_common_data
-    @skills ||= Skill.all
-    @categories ||= Category.all
+    @skills = Skill.all
+    @categories = Category.all
   end
 
   def job_params
