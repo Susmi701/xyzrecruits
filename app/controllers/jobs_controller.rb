@@ -23,7 +23,7 @@ class JobsController < ApplicationController
     @application = @job.applications.build(application_params)
 
     if @application.save
-      ApplicationMailer.application_received(@application).deliver_later
+      UserMailer.application_received(@application).deliver_later
       redirect_to confirm_job_path, notice: 'Your application has been submitted!'
     else
       render :apply, status: :unprocessable_entity

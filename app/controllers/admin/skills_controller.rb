@@ -15,10 +15,10 @@ class Admin::SkillsController < ApplicationController
         format.turbo_stream { flash.now[:notice] = "Skill was successfully created." }
         else
           format.html { render :index, status: :unprocessable_entity }
-          format.turbo_stream { 
-            render turbo_stream: turbo_stream.update("new_skill", partial: "form", 
-                    status: :unprocessable_entity, locals: { skill: @skill })
-          }
+          # format.turbo_stream { 
+          #   render turbo_stream: turbo_stream.update("new_skill", partial: "form", 
+          #           status: :unprocessable_entity, locals: { skill: @skill })
+          # }
       end
     end
   end 
@@ -40,10 +40,10 @@ class Admin::SkillsController < ApplicationController
         
       else
         format.html { render :index, status: :unprocessable_entity }
-        format.turbo_stream { 
-          render turbo_stream: turbo_stream.update("new_skill", partial: "form",
-                status: :unprocessable_entity, locals: { skill: @skill})
-        }
+        # format.turbo_stream { 
+        #   render turbo_stream: turbo_stream.update("new_skill", partial: "form",
+        #         status: :unprocessable_entity, locals: { skill: @skill})
+        # }
       end
     end
   end

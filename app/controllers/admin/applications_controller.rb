@@ -5,7 +5,7 @@ class Admin::ApplicationsController < ApplicationController
 
   def shortlist
     if @application.update(status: :shortlisted)
-      ApplicationMailer.shortlisted_email(@application).deliver_later
+      UserMailer.shortlisted_email(@application).deliver_later
       redirect_to admin_job_path(@job), notice: 'Application has been shortlisted!'
     else
       redirect_to admin_job_path(@job), alert: 'Failed to shortlist the application.'

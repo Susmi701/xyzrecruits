@@ -7,3 +7,15 @@
   #     redirect_to admin_skills_path, alert: 'Skill was successfully destroyed.'
   #   end
   # end
+
+
+  class RecalculateFitScoresJob < ApplicationJob
+  queue_as :default
+
+  def perform(job_id)
+    job = Job.find(job_id)
+    job.applications.find_each do |application|
+      application.update(fit_score: ApplicationFitScoreCalculator.new(application).calculate)
+    end
+  end
+end
