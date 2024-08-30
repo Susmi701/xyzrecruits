@@ -18,7 +18,9 @@
           <%= render "common/dashboard" %>
         </div>
         <div class="content flex-grow-1 p-3">
+          <div id="flash" class="flash">
           <%= render 'layouts/messages' %>
+          </div>
           <div class="page-content">   
       <%= yield %>
     </div>
@@ -26,7 +28,10 @@
       </div>
     <% else %>
       <%= render "common/nav" %>
-      <%= render 'layouts/messages' %>
+      
+<%= render 'layouts/messages' %>
+      
+      
       <div class="page-content">   
       <%= yield %>
     </div>

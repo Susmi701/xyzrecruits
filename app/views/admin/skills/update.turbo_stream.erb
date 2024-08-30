@@ -1,0 +1,3 @@
+<%= turbo_stream.replace @skill, partial: "skill", locals: { skill: @skill } %>
+ <%= turbo_stream.update "new_skill", partial: "form", locals: { skill: Skill.new } %>
+ <%= turbo_stream.prepend "flash", partial: "layouts/messages" %>
